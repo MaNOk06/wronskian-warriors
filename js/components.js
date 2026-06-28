@@ -21,8 +21,9 @@
     { id: "analysis", label: "Analysis", href: "analysis.html", children: [
       { label: "The four cases", href: "analysis.html#cases" },
       { label: "Replication of the paper", href: "analysis.html#replication" },
-      { label: "Sensitivity analysis", href: "analysis.html#lab" },
-      { label: "Phase plane", href: "analysis.html#phase" }
+      { label: "Sensitivity analysis (time)", href: "analysis.html#lab" },
+      { label: "Phase plane", href: "analysis.html#phase" },
+      { label: "Sensitivity analysis (phase)", href: "analysis.html#lab-phase" }
     ]},
     { id: "about", label: "About", href: "team.html", children: [
       { label: "The team", href: "team.html#team" },

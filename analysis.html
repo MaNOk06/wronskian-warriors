@@ -76,7 +76,7 @@
         <h3 style="margin-top:0">Undamped, c = 0</h3>
         <div class="repl-pair">
           <div class="repl-col">
-            <p class="repl-label">Our result (live)</p>
+            <p class="repl-label">Our result</p>
             <div class="repl-frame"><canvas id="repl-c0" aria-label="Our undamped displacement curve"></canvas></div>
           </div>
           <div class="repl-col">
@@ -91,7 +91,7 @@
         <h3 style="margin-top:0">Underdamped, c = 2</h3>
         <div class="repl-pair">
           <div class="repl-col">
-            <p class="repl-label">Our result (live)</p>
+            <p class="repl-label">Our result</p>
             <div class="repl-frame"><canvas id="repl-c2" aria-label="Our underdamped displacement curve"></canvas></div>
           </div>
           <div class="repl-col">
@@ -106,7 +106,7 @@
         <h3 style="margin-top:0">Critically damped, c = 8</h3>
         <div class="repl-pair">
           <div class="repl-col">
-            <p class="repl-label">Our result (live)</p>
+            <p class="repl-label">Our result</p>
             <div class="repl-frame"><canvas id="repl-c8" aria-label="Our critically damped displacement curve"></canvas></div>
           </div>
           <div class="repl-col">
@@ -121,14 +121,12 @@
         <h3 style="margin-top:0">Overdamped, c = 10</h3>
         <div class="repl-pair">
           <div class="repl-col">
-            <p class="repl-label">Our result (live)</p>
+            <p class="repl-label">Our result</p>
             <div class="repl-frame"><canvas id="repl-c10" aria-label="Our overdamped displacement curve"></canvas></div>
           </div>
           <div class="repl-col">
             <p class="repl-label">MATLAB figure (Krcheva 2024)</p>
-            <div class="repl-slot">
-              <img class="repl-img" src="assets/fig7.png" alt="MATLAB displacement and phase plane for the overdamped case">
-            </div>
+            <img class="repl-img" src="assets/fig7.png" alt="MATLAB displacement and phase plane for the overdamped case">
           </div>
         </div>
         <p class="muted" style="margin:.9rem 0 0">Solution \( y = \tfrac{4}{3}e^{-2t} - \tfrac{1}{3}e^{-8t} \): a slow, non-oscillating return to rest.</p>
@@ -136,58 +134,52 @@
     </div>
   </section>
 
-  <!-- SENSITIVITY ANALYSIS -->
+  <!-- SENSITIVITY ANALYSIS: OVER TIME -->
   <section class="section" id="lab">
     <div class="wrap">
-      <h2 class="reveal">Sensitivity analysis</h2>
-      <p class="reveal" style="max-width:72ch">The damping coefficient is the most sensitive parameter in this model. Crossing the critical value \( c_c = 2\sqrt{mk} \) removes the oscillation entirely. Drag any control to recompute the solution, or overlay the whole sweep at once.</p>
+      <h2 class="reveal">Sensitivity analysis: response over time</h2>
+      <p class="reveal" style="max-width:72ch">The damping coefficient is the most sensitive parameter in this model. Crossing the critical value \( c_c = 2\sqrt{mk} \) removes the oscillation entirely. Drag any control to recompute the displacement over time, or overlay the whole sweep at once.</p>
 
       <div class="lab reveal" style="margin-top:1.6rem">
         <div class="lab__head">
           <span class="lab__title">m ÿ + c ẏ + k y = 0</span>
-          <div style="display:flex;gap:.6rem;align-items:center">
-            <div class="seg" id="lab-view" role="group" aria-label="Choose a view">
-              <button data-view="time" aria-pressed="true">Over time</button>
-              <button data-view="phase">Phase plane</button>
-            </div>
-            <button class="btn btn--ghost" id="lab-reset" style="padding:.45rem .8rem;font-size:.85rem">Reset</button>
-          </div>
+          <button class="btn btn--ghost" id="lt-reset" style="padding:.45rem .8rem;font-size:.85rem">Reset</button>
         </div>
         <div class="lab__body">
           <div class="lab__controls">
             <div class="control">
-              <label for="s-m">Mass m <span class="val" id="v-m">1.0</span></label>
-              <input type="range" id="s-m" min="0.5" max="5" step="0.1" value="1">
+              <label for="lt-m">Mass m <span class="val" id="lt-v-m">1.0</span></label>
+              <input type="range" id="lt-m" min="0.5" max="5" step="0.1" value="1">
             </div>
             <div class="control">
-              <label for="s-c">Damping coefficient c <span class="val" id="v-c">2.00</span></label>
-              <input type="range" id="s-c" min="0" max="20" step="0.1" value="2">
+              <label for="lt-c">Damping coefficient c <span class="val" id="lt-v-c">2.00</span></label>
+              <input type="range" id="lt-c" min="0" max="20" step="0.1" value="2">
             </div>
             <div class="control">
-              <label for="s-k">Spring stiffness k <span class="val" id="v-k">16.0</span></label>
-              <input type="range" id="s-k" min="4" max="40" step="1" value="16">
+              <label for="lt-k">Spring stiffness k <span class="val" id="lt-v-k">16.0</span></label>
+              <input type="range" id="lt-k" min="4" max="40" step="1" value="16">
             </div>
             <div class="control">
-              <label for="s-y0">Initial displacement y(0) <span class="val" id="v-y0">1.0</span></label>
-              <input type="range" id="s-y0" min="-2" max="2" step="0.1" value="1">
+              <label for="lt-y0">Initial displacement y(0) <span class="val" id="lt-v-y0">1.0</span></label>
+              <input type="range" id="lt-y0" min="-2" max="2" step="0.1" value="1">
             </div>
             <div class="control">
-              <label for="s-v0">Initial velocity y'(0) <span class="val" id="v-v0">0.0</span></label>
-              <input type="range" id="s-v0" min="-10" max="10" step="0.5" value="0">
+              <label for="lt-v0">Initial velocity y'(0) <span class="val" id="lt-v-v0">0.0</span></label>
+              <input type="range" id="lt-v0" min="-10" max="10" step="0.5" value="0">
             </div>
             <label style="display:flex;align-items:center;gap:.5rem;font-size:1rem;font-weight:700;cursor:pointer">
-              <input type="checkbox" id="s-sweep"> Overlay damping sweep, c = 0 to 10
+              <input type="checkbox" id="lt-sweep"> Overlay damping sweep, c = 0 to 10
             </label>
           </div>
           <div class="lab__canvas">
-            <canvas id="lab-canvas" aria-label="Live solution of the damped mass-spring-damper equation"></canvas>
+            <canvas id="lt-canvas" aria-label="Live displacement over time"></canvas>
             <div style="display:flex;flex-wrap:wrap;gap:.6rem 1.4rem;align-items:center;margin-top:1rem">
-              <span class="regime-pill" id="r-regime" style="background:#C2913B">Underdamped</span>
+              <span class="regime-pill" id="lt-regime" style="background:#C2913B">Underdamped</span>
               <div class="readout" style="flex:1;min-width:280px">
-                <div>Damping ratio ζ <b id="r-zeta">0.250</b></div>
-                <div>Natural undamped frequency ω₀ <b id="r-w0">4.00</b></div>
-                <div>Damped frequency ω* <b id="r-wd">3.87</b></div>
-                <div>Critical damping c_c <b id="r-ccrit">8.00</b></div>
+                <div>Damping ratio ζ <b id="lt-zeta">0.250</b></div>
+                <div>Natural undamped frequency ω₀ <b id="lt-w0">4.00</b></div>
+                <div>Damped frequency ω* <b id="lt-wd">3.87</b></div>
+                <div>Critical damping c_c <b id="lt-ccrit">8.00</b></div>
               </div>
             </div>
           </div>
@@ -202,13 +194,67 @@
       <div class="reveal">
         <h2>The phase plane</h2>
         <p>Plotting velocity against displacement removes time and shows the system's energy directly. The undamped case traces a closed clockwise ellipse, since energy is conserved and the motion never settles. Adding damping makes the trajectory spiral inward toward the origin as energy is lost.</p>
-        <p>The critically damped and overdamped cases do not loop at all: the trajectory sweeps out once and returns to the origin. Switch the sensitivity analysis above to <strong>Phase plane</strong> to generate this for any parameters.</p>
-        <a class="btn btn--sage" href="#lab">Open the sensitivity analysis <span class="arr">&rarr;</span></a>
+        <p>The critically damped and overdamped cases do not loop at all: the trajectory sweeps out once and returns to the origin. The four cases are shown together on the right, and you can generate the phase plane for any parameters in the sensitivity analysis below.</p>
+        <a class="btn btn--sage" href="#lab-phase">Open the phase-plane sensitivity analysis <span class="arr">&rarr;</span></a>
       </div>
       <div class="reveal">
         <div class="card">
           <span class="lab__title" style="display:block;margin-bottom:.6rem">Velocity versus displacement</span>
           <canvas id="cmp-phase" aria-label="Phase plane trajectories for the four damping cases"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SENSITIVITY ANALYSIS: PHASE PLANE -->
+  <section class="section" id="lab-phase">
+    <div class="wrap">
+      <h2 class="reveal">Sensitivity analysis: phase plane</h2>
+      <p class="reveal" style="max-width:72ch">The same system viewed in the phase plane. Drag the controls to watch the trajectory change shape: a closed ellipse with no damping, an inward spiral when underdamped, and a single sweep into the origin once the damping reaches the critical value.</p>
+
+      <div class="lab reveal" style="margin-top:1.6rem">
+        <div class="lab__head">
+          <span class="lab__title">velocity y' versus displacement y</span>
+          <button class="btn btn--ghost" id="lp-reset" style="padding:.45rem .8rem;font-size:.85rem">Reset</button>
+        </div>
+        <div class="lab__body">
+          <div class="lab__controls">
+            <div class="control">
+              <label for="lp-m">Mass m <span class="val" id="lp-v-m">1.0</span></label>
+              <input type="range" id="lp-m" min="0.5" max="5" step="0.1" value="1">
+            </div>
+            <div class="control">
+              <label for="lp-c">Damping coefficient c <span class="val" id="lp-v-c">2.00</span></label>
+              <input type="range" id="lp-c" min="0" max="20" step="0.1" value="2">
+            </div>
+            <div class="control">
+              <label for="lp-k">Spring stiffness k <span class="val" id="lp-v-k">16.0</span></label>
+              <input type="range" id="lp-k" min="4" max="40" step="1" value="16">
+            </div>
+            <div class="control">
+              <label for="lp-y0">Initial displacement y(0) <span class="val" id="lp-v-y0">1.0</span></label>
+              <input type="range" id="lp-y0" min="-2" max="2" step="0.1" value="1">
+            </div>
+            <div class="control">
+              <label for="lp-v0">Initial velocity y'(0) <span class="val" id="lp-v-v0">0.0</span></label>
+              <input type="range" id="lp-v0" min="-10" max="10" step="0.5" value="0">
+            </div>
+            <label style="display:flex;align-items:center;gap:.5rem;font-size:1rem;font-weight:700;cursor:pointer">
+              <input type="checkbox" id="lp-sweep"> Overlay damping sweep, c = 0 to 10
+            </label>
+          </div>
+          <div class="lab__canvas">
+            <canvas id="lp-canvas" aria-label="Live phase plane trajectory"></canvas>
+            <div style="display:flex;flex-wrap:wrap;gap:.6rem 1.4rem;align-items:center;margin-top:1rem">
+              <span class="regime-pill" id="lp-regime" style="background:#C2913B">Underdamped</span>
+              <div class="readout" style="flex:1;min-width:280px">
+                <div>Damping ratio ζ <b id="lp-zeta">0.250</b></div>
+                <div>Natural undamped frequency ω₀ <b id="lp-w0">4.00</b></div>
+                <div>Damped frequency ω* <b id="lp-wd">3.87</b></div>
+                <div>Critical damping c_c <b id="lp-ccrit">8.00</b></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
