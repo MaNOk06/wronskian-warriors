@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>The Model - Wronskian Genuises</title>
-  <meta name="description" content="How a spring, a weight and a shock absorber combine into one equation, and the four kinds of motion it can produce.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <title>The Model</title>
+  <meta name="description" content="Deriving the damped mass-spring-damper equation from Newton's second law, comparing our derivation with the original paper, and the four damping regimes.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -16,131 +17,135 @@
   <header class="pagehead">
     <div class="wrap">
       <p class="crumbs">Home / The Model</p>
-      <h1>The maths behind the motion</h1>
-      <p class="lede">How a spring, a weight and a shock absorber combine into one neat equation, and what that equation tells us before we plot a single graph.</p>
+      <h1>The mathematical model</h1>
+      <p class="lede">From Newton's second law to the governing second-order ODE and its characteristic equation, how our derivation lines up with the original paper, and the four damping regimes the discriminant produces.</p>
     </div>
   </header>
 
   <!-- OVERVIEW -->
   <section class="section" id="overview">
-    <div class="wrap split">
-      <div class="reveal">
-        <h2>The three parts</h2>
-        <p>Picture a weight hanging from a spring, with a shock absorber attached alongside it. Pull the weight down a little and release it, and it moves up and down about its resting position. Three things shape that movement.</p>
-        <p>The <strong>spring</strong> always pulls the weight back toward the middle. The <strong>shock absorber</strong> pushes back against whichever way the weight is moving, draining energy out of the motion. And the <strong>weight</strong> itself resists changes to its speed. Balancing these three is all the model really does.</p>
-        <p class="muted">We assume the spring's own weight is tiny, the motion is straight up and down, and the three quantities below stay fixed while the motion happens.</p>
-      </div>
-      <div class="reveal">
-        <div class="card" style="display:flex;justify-content:center">
-          <svg viewBox="0 0 260 320" width="240" role="img" aria-label="Diagram of a weight on a spring with a shock absorber, measured from its resting position">
-            <rect x="60" y="14" width="140" height="10" fill="#EFE7D6"/>
-            <line x1="56" y1="24" x2="204" y2="24" stroke="#C9BBA0" stroke-width="2"/>
-            <g stroke="#C9BBA0" stroke-width="1">
-              <line x1="64" y1="14" x2="56" y2="24"/><line x1="80" y1="14" x2="72" y2="24"/>
-              <line x1="96" y1="14" x2="88" y2="24"/><line x1="112" y1="14" x2="104" y2="24"/>
-              <line x1="128" y1="14" x2="120" y2="24"/><line x1="144" y1="14" x2="136" y2="24"/>
-              <line x1="160" y1="14" x2="152" y2="24"/><line x1="176" y1="14" x2="168" y2="24"/>
-              <line x1="192" y1="14" x2="184" y2="24"/>
-            </g>
-            <polyline points="100,24 100,40 84,52 116,64 84,76 116,88 84,100 116,112 100,124 100,140"
-              fill="none" stroke="#6E7E5E" stroke-width="2.4" stroke-linejoin="round"/>
-            <text x="68" y="86" font-family="Fredoka" font-size="13" fill="#56654A">spring</text>
-            <line x1="160" y1="24" x2="160" y2="60" stroke="#897F6C" stroke-width="2"/>
-            <rect x="150" y="60" width="20" height="64" fill="#F1EADD" stroke="#C9BBA0" stroke-width="1.4"/>
-            <rect x="151" y="96" width="18" height="27" fill="rgba(110,126,94,.30)"/>
-            <line x1="152" y1="88" x2="168" y2="88" stroke="#6E7E5E" stroke-width="3"/>
-            <line x1="160" y1="88" x2="160" y2="140" stroke="#6E7E5E" stroke-width="2"/>
-            <text x="174" y="98" font-family="Fredoka" font-size="13" fill="#56654A">damper</text>
-            <line x1="100" y1="140" x2="100" y2="150" stroke="#897F6C" stroke-width="2"/>
-            <line x1="160" y1="140" x2="160" y2="150" stroke="#897F6C" stroke-width="2"/>
-            <line x1="100" y1="150" x2="160" y2="150" stroke="#897F6C" stroke-width="2"/>
-            <rect x="104" y="150" width="52" height="40" rx="8" fill="#BC5B3C"/>
-            <text x="130" y="176" text-anchor="middle" font-family="Fredoka" font-size="16" fill="#FCFAF4">weight</text>
-            <line x1="40" y1="170" x2="210" y2="170" stroke="#C9BBA0" stroke-width="1" stroke-dasharray="4 4"/>
-            <text x="40" y="165" font-family="IBM Plex Mono" font-size="11" fill="#897F6C">resting position</text>
-            <line x1="220" y1="170" x2="220" y2="220" stroke="#BC5B3C" stroke-width="1.4"/>
-            <polygon points="220,220 216,212 224,212" fill="#BC5B3C"/>
-            <text x="226" y="200" font-family="Fredoka" font-size="14" fill="#9C4830">y</text>
-          </svg>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- THE THREE QUANTITIES -->
-  <section class="section section--paper">
     <div class="wrap">
-      <h2 class="reveal">The three quantities we control</h2>
+      <h2 class="reveal">The three components</h2>
+      <p class="reveal" style="max-width:70ch">A mass-spring-damper system has three components: a mass suspended over a spring and a damper. The spring provides a restoring force, the damper removes energy, and the mass carries the inertia. The interaction of the three determines how the system returns to equilibrium.</p>
       <div class="grid grid-3" style="margin-top:1.8rem">
-        <div class="card reveal"><h3>Mass</h3><p class="mb0 muted">How heavy the weight is. A heavier weight is harder to get moving and harder to stop. We write it as <code>m</code>.</p></div>
-        <div class="card reveal"><h3>Stiffness</h3><p class="mb0 muted">How strong the spring is. A stiffer spring snaps the weight back to the middle faster. We write it as <code>k</code>.</p></div>
-        <div class="card reveal"><h3>Resistance</h3><p class="mb0 muted">How hard the shock absorber fights the motion. More resistance means the bouncing fades sooner. We write it as <code>c</code>.</p></div>
+        <div class="card reveal"><h3>Mass</h3><p class="mb0">The body of mass \(m\), measured in kilograms. Its inertia resists changes in velocity, giving the term \(m\ddot{y}\).</p></div>
+        <div class="card reveal"><h3>Damping coefficient</h3><p class="mb0">The constant \(c\), measured in \(\mathrm{N\,s/m}\). It sets the strength of the damping force \(-c\dot{y}\) that opposes motion.</p></div>
+        <div class="card reveal"><h3>Spring constant</h3><p class="mb0">The stiffness \(k\), measured in \(\mathrm{N/m}\). By Hooke's law it gives the restoring force \(-ky\).</p></div>
       </div>
     </div>
   </section>
 
   <!-- DERIVATION -->
-  <section class="section" id="derivation">
+  <section class="section section--paper" id="derivation">
     <div class="wrap">
-      <h2 class="reveal">How we get the equation</h2>
+      <h2 class="reveal">Deriving the equation of motion</h2>
       <div class="grid grid-2" style="margin-top:1.6rem;align-items:start">
         <div class="reveal stack">
-          <p>The starting point is one of the oldest rules in physics: the push on an object equals its mass times how fast its speed is changing.</p>
-          <div class="eq">\( \text{force} = m \times \text{acceleration} \)</div>
-          <p>Two forces act on the weight once it is moving. The spring force pulls it back toward the middle, getting stronger the further it is pulled. The resistance force opposes its motion, getting stronger the faster it moves.</p>
-          <div class="eq">\( \text{spring force} = -k\,y \qquad \text{resistance} = -c\,\dot{y} \)</div>
-          <p>Here \(y\) is how far the weight sits from its resting position, and \(\dot{y}\) is how fast it is moving.</p>
+          <p>The displacement \(y(t)\) of the body is governed by Newton's second law, which equates the inertial term to the resultant force.</p>
+          <div class="eq">\( m\,\ddot{y} = \sum F \)</div>
+          <p>At static equilibrium the spring stretch \(\delta\) makes the spring force balance gravity, \(-k\delta + mg = 0\), so when displacement is measured from equilibrium those constant terms cancel and play no part in the motion. The two forces that remain are the restoring force and the damping force.</p>
+          <div class="eq">\( F_{\text{spring}} = -k\,y \qquad F_{\text{damping}} = -c\,\dot{y} \)</div>
         </div>
         <div class="reveal stack">
-          <p>Putting the forces together and tidying up gives the single equation that runs through the whole site.</p>
+          <p>Summing the forces gives \( m\ddot{y} = -ky - c\dot{y} \), which rearranges into the governing second-order homogeneous linear ODE with constant coefficients.</p>
           <div class="eq eq--center" style="border-left-color:var(--terracotta)">\( m\,\ddot{y} + c\,\dot{y} + k\,y = 0 \)</div>
-          <p>In words: the weight's inertia, plus the resistance, plus the spring pull, always balance out to zero. Give the weight a starting pull and let go, and this equation predicts every wobble that follows.</p>
-          <p>To find out what kind of motion it produces, we look at a smaller helper equation built from the same three quantities. The answer it gives splits the motion into four clear types.</p>
+          <p>Substituting the trial solution \( y = e^{\lambda t} \) and dividing by \(m\) gives the characteristic equation, whose roots decide the type of motion.</p>
           <div class="eq eq--center">\( \lambda^2 + \dfrac{c}{m}\lambda + \dfrac{k}{m} = 0 \)</div>
+          <p>For numerical work the equation is reduced to a system of two first-order equations, with \( y_1 = y \) and \( y_2 = \dot{y} \).</p>
+          <div class="eq">\( \dot{y}_1 = y_2, \qquad \dot{y}_2 = \dfrac{-c\,y_2 - k\,y_1}{m} \)</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- FOUR BEHAVIOURS -->
+  <!-- COMPARISON WITH PAPER -->
+  <section class="section" id="comparison">
+    <div class="wrap">
+      <h2 class="reveal">How our derivation compares with the paper</h2>
+      <p class="reveal" style="max-width:72ch">Our project replicates Krcheva (2024), so we set out to reach the governing equation independently and check it against the paper step by step. The route is identical; the differences are small points of notation and a few slips in the paper that we corrected.</p>
+
+      <div class="card reveal" style="margin-top:1.6rem;overflow-x:auto">
+        <table class="table">
+          <thead><tr><th>Step</th><th>Krcheva (2024)</th><th>Our derivation</th></tr></thead>
+          <tbody>
+            <tr><td>Starting law</td><td>Newton's second law, \(m\ddot{y} = F\)</td><td>Same</td></tr>
+            <tr><td>Spring force</td><td>Hooke's law, restoring force \(-ky\)</td><td>Same</td></tr>
+            <tr><td>Gravity</td><td>Cancels at static equilibrium, \(-k\delta + mg = 0\)</td><td>Same, displacement measured from equilibrium</td></tr>
+            <tr><td>Damping force</td><td>Proportional to velocity, \(-c\dot{y}\)</td><td>Same</td></tr>
+            <tr><td>Governing ODE</td><td>\(m\ddot{y} + c\dot{y} + ky = 0\)</td><td>Identical</td></tr>
+            <tr><td>For computation</td><td>Reduced to a first-order system, solved in MATLAB</td><td>Reduced the same way, solved with our own Runge-Kutta in the browser</td></tr>
+            <tr><td>Variable in solutions</td><td>Writes solutions in terms of \(x\)</td><td>We keep time \(t\) throughout for consistency</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="reveal" style="margin-top:2.2rem">Points we corrected in the paper</h3>
+      <div class="grid grid-2" style="margin-top:1.2rem">
+        <div class="card reveal">
+          <h4 style="margin-top:0">The critical-damping solution</h4>
+          <p class="mb0">For \(c = 8\), the paper prints the solution as \((1+4)e^{-4x}\), which drops the variable and collapses to a constant times an exponential. The correct repeated-root solution is \((1 + 4t)e^{-4t}\), and that is what our graphs use. The linear-in-\(t\) factor is exactly what marks critical damping.</p>
+        </div>
+        <div class="card reveal">
+          <h4 style="margin-top:0">Labelling of the roots</h4>
+          <p class="mb0">In the critical and overdamped cases the paper labels the roots "complex conjugate", but for \(c = 8\) they are a repeated real root \(\lambda = -4\), and for \(c = 10\) they are distinct real roots \(\lambda = -2, -8\). Only the underdamped case has genuinely complex roots.</p>
+        </div>
+        <div class="card reveal">
+          <h4 style="margin-top:0">The Van der Pol naming</h4>
+          <p class="mb0">The paper's MATLAB routine is named for the Van der Pol oscillator, which is nonlinear with amplitude-dependent damping. Our system is linear with constant coefficients, so although the code integrates the correct linear system, the name is a carry-over rather than a description of the physics.</p>
+        </div>
+        <div class="card reveal">
+          <h4 style="margin-top:0">What stays the same</h4>
+          <p class="mb0">None of these points change the conclusions. With \(m = 1\), \(k = 16\) and \(c = 0, 2, 8, 10\), our solutions and graphs agree with the paper case by case, which is the heart of the replication on the analysis page.</p>
+        </div>
+      </div>
+      <!-- NOTE FOR THE TEAM: if you want to soften this, you can remove the "Points we corrected" block. The facts above were checked against Krcheva (2024), equations (4.8), (4.7), (4.10) and section 3. -->
+    </div>
+  </section>
+
+  <!-- REGIMES -->
   <section class="section section--paper" id="regimes">
     <div class="wrap">
-      <h2 class="reveal">The four kinds of motion</h2>
-      <p class="reveal muted" style="max-width:64ch">Keep the weight and spring the same, and change only the resistance. As you turn it up, the motion passes through four distinct kinds, set by whether the resistance is below, at, or above one special value.</p>
+      <h2 class="reveal">The four damping regimes</h2>
+      <p class="reveal" style="max-width:70ch">Writing the discriminant as \( \Delta = c^2 - 4mk \), its sign sorts the motion into four cases. The roots are \( \lambda_{1,2} = -\alpha \pm \beta \) with \( \alpha = \tfrac{c}{2m} \) and \( \beta = \tfrac{1}{2m}\sqrt{c^2 - 4mk} \).</p>
 
       <div class="grid grid-4" style="margin-top:1.8rem">
         <div class="card reveal" style="border-top:3px solid #BC5B3C">
-          <h3>No resistance</h3>
-          <p class="mb0 muted">With nothing to slow it, the weight bounces up and down forever at a steady rhythm.</p>
+          <h3>Undamped</h3>
+          <p class="muted">\(c = 0\). No energy loss, so the mass oscillates forever at its natural frequency.</p>
+          <div class="eq mb0">\( y = A\cos\omega_0 t + B\sin\omega_0 t \)</div>
         </div>
         <div class="card reveal" style="border-top:3px solid #C2913B">
-          <h3>Light resistance</h3>
-          <p class="mb0 muted">The weight still bounces, but each swing is a little smaller than the last until it fades away.</p>
+          <h3>Underdamped</h3>
+          <p class="muted">\( \Delta < 0 \). Complex roots give a decaying oscillation at the damped frequency.</p>
+          <div class="eq mb0">\( y = Ce^{-\alpha t}\cos(\omega^{*} t - \delta) \)</div>
         </div>
         <div class="card reveal" style="border-top:3px solid #6E7E5E">
-          <h3>Just enough</h3>
-          <p class="mb0 muted">The sweet spot. The weight returns to rest in the shortest time with no bouncing at all.</p>
+          <h3>Critically damped</h3>
+          <p class="muted">\( \Delta = 0 \). A repeated real root gives the fastest return to rest with no oscillation.</p>
+          <div class="eq mb0">\( y = (c_1 + c_2 t)\,e^{-\alpha t} \)</div>
         </div>
         <div class="card reveal" style="border-top:3px solid #4F6D7A">
-          <h3>Heavy resistance</h3>
-          <p class="mb0 muted">So much resistance that the weight oozes back to the middle slowly, without ever overshooting.</p>
+          <h3>Overdamped</h3>
+          <p class="muted">\( \Delta > 0 \). Two distinct real roots; the mass creeps back to rest without crossing it.</p>
+          <div class="eq mb0">\( y = c_1 e^{\lambda_1 t} + c_2 e^{\lambda_2 t} \)</div>
         </div>
       </div>
 
       <div class="card reveal" style="margin-top:1.8rem;overflow-x:auto">
-        <h3 style="margin-top:0">A few useful numbers</h3>
+        <h3 style="margin-top:0">Key quantities</h3>
         <table class="table">
-          <thead><tr><th>Name</th><th>What it means</th><th>How to find it</th></tr></thead>
+          <thead><tr><th>Quantity</th><th>Symbol</th><th>Expression</th></tr></thead>
           <tbody>
-            <tr><td>Natural rhythm</td><td>How fast it would bounce with no resistance</td><td>\( \sqrt{k/m} \)</td></tr>
-            <tr><td>The special value</td><td>The resistance that gives the sweet spot</td><td>\( 2\sqrt{mk} \)</td></tr>
-            <tr><td>Damping ratio</td><td>Resistance compared to that special value: below 1 bounces, 1 is the sweet spot, above 1 is heavy</td><td>\( c / (2\sqrt{mk}) \)</td></tr>
+            <tr><td>Natural undamped frequency</td><td>\( \omega_0 \)</td><td>\( \sqrt{k/m} \)</td></tr>
+            <tr><td>Critical damping coefficient</td><td>\( c_c \)</td><td>\( 2\sqrt{mk} \)</td></tr>
+            <tr><td>Damping ratio</td><td>\( \zeta \)</td><td>\( c / (2\sqrt{mk}) \)</td></tr>
+            <tr><td>Damped angular frequency</td><td>\( \omega^{*} \)</td><td>\( \sqrt{\,k/m - c^2/4m^2} \)</td></tr>
           </tbody>
         </table>
       </div>
 
       <div class="center" style="margin-top:2rem">
-        <a class="btn btn--primary reveal" href="analysis.html#cases">See these four plotted out <span class="arr">&rarr;</span></a>
+        <a class="btn btn--primary reveal" href="analysis.html#cases">See these regimes solved and plotted <span class="arr">&rarr;</span></a>
       </div>
     </div>
   </section>

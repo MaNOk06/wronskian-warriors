@@ -63,9 +63,9 @@ window.MSD = (function () {
     var w0 = Math.sqrt(k / m);               // natural frequency
     var zeta = c / (2 * Math.sqrt(m * k));   // damping ratio
     var regime, color;
-    if (Math.abs(disc) < 1e-9) { regime = "Just enough"; color = "#6E7E5E"; }
-    else if (disc > 0)         { regime = "Heavy resistance"; color = "#4F6D7A"; }
-    else                       { regime = (c === 0 ? "No resistance" : "Light resistance"); color = (c === 0 ? "#BC5B3C" : "#C2913B"); }
+    if (Math.abs(disc) < 1e-9) { regime = "Critically damped"; color = "#6E7E5E"; }
+    else if (disc > 0)         { regime = "Overdamped"; color = "#4F6D7A"; }
+    else                       { regime = (c === 0 ? "Undamped" : "Underdamped"); color = (c === 0 ? "#BC5B3C" : "#C2913B"); }
     var wd = disc < 0 ? Math.sqrt(4 * m * k - c * c) / (2 * m) : 0; // damped freq
     var cCrit = 2 * Math.sqrt(m * k);
     return { disc: disc, w0: w0, zeta: zeta, wd: wd, cCrit: cCrit, regime: regime, color: color };

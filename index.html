@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Wronskian Genuises</title>
-  <meta name="description" content="A friendly look at how a weight on a spring settles back to rest, with a live simulator you can play with. A MATH251 project.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <title>Wronskian Geniuses</title>
+  <meta name="description" content="A MATH251 study of the damped mass-spring-damper system: derived from Newton's second law, solved numerically, and compared with the original paper.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -18,9 +19,9 @@
     <div class="wrap hero__grid">
       <div class="reveal">
         <h1>One spring, one mass,<br>four ways to come to rest.</h1>
-        <p class="lede">Hang a weight on a spring, pull it down, and let go. It bounces, then slowly settles. How fast and how smoothly it settles comes down to one thing: how much something is slowing the motion. This project works out the maths behind that, and lets you play with it.</p>
+        <p class="lede">A weight on a spring, released and left to settle, is described by a single second-order differential equation. This project derives that equation from Newton's second law, solves it numerically, and compares our results against the original paper by Krcheva (2024).</p>
         <div class="tag-row">
-          <a class="btn btn--primary" href="#what">See how it works <span class="arr">&rarr;</span></a>
+          <a class="btn btn--primary" href="#what">Start with the system <span class="arr">&rarr;</span></a>
         </div>
       </div>
 
@@ -28,33 +29,33 @@
         <div class="hero__stage">
           <div class="hero__stagebar">
             <span class="card__tag">Live simulation</span>
-            <div class="seg" role="group" aria-label="Choose how much the motion is slowed">
-              <button data-regime="undamped">None</button>
-              <button data-regime="under" aria-pressed="true">Under</button>
-              <button data-regime="critical">Critical</button>
-              <button data-regime="over">Over</button>
+            <div class="seg" role="group" aria-label="Choose a damping case">
+              <button data-regime="undamped">Undamped</button>
+              <button data-regime="under" aria-pressed="true">Underdamped</button>
+              <button data-regime="critical">Critically damped</button>
+              <button data-regime="over">Overdamped</button>
             </div>
           </div>
-          <canvas id="hero-canvas" aria-label="Animation of a weight bouncing on a spring, with a graph of its position over time"></canvas>
+          <canvas id="hero-canvas" aria-label="Animation of a mass on a spring, with a graph of its displacement over time"></canvas>
         </div>
       </div>
     </div>
   </section>
 
-<!-- ============ BACKGROUND / PROBLEM DEFINITION ============ -->
+  <!-- ============ BACKGROUND / PROBLEM DEFINITION ============ -->
   <section class="section section--paper" id="what">
     <div class="wrap">
       <h2>Problem definition</h2>
-      <p class="lede">The mass, spring and damper system is one of the most important models in engineering and physics, used to analyse how objects respond to forces. It lets engineers understand oscillations, so they can predict how structures will move, absorb energy, and respond to outside events. Understanding how things behave when they vibrate is what makes it possible to design safer vehicle suspensions, rotating machinery, and sensitive instruments.</p>
+      <p class="lede">The mass-spring-damper system is one of the most important models in engineering and physics, used to analyse how objects respond to forces. It lets engineers understand oscillations, so they can predict how structures will move, absorb energy, and respond to external events. Understanding how things behave when they vibrate is what makes it possible to design safer vehicle suspensions, rotating machinery, and sensitive instruments.</p>
 
       <div class="split" style="margin-top:2rem">
-        <div class="lede">
-          <p>The ideas behind this model are used right across engineering to deal with vibration, from designing skyscrapers that can stand up to strong wind, to building robots that move more steadily. The same model also helps study the response of many other moving systems.</p>
-          <p>The system has three main parts: a spring, a damper, and a mass that hangs from the spring and damper together. The spring has a stiffness \(k\) and provides a restoring force. The mass \(m\) brings an inertial force, the resistance to motion that comes from mass and acceleration. The damper, with damping coefficient \(c\), changes the natural oscillation, and how much damping there is compared with the mass and stiffness decides how the system returns to its resting position.</p>
+        <div class="reveal stack">
+          <p>The fundamental concepts of the model are applied across engineering to solve problems in vibration control, from designing skyscrapers that withstand dynamic forces like strong wind, to robotics that achieve more stable movement. The same model is used to study the response of many dynamic systems.</p>
+          <p>The system has three main components: the spring, the damper, and the mass suspended over them. The spring has a stiffness \(k\) and a restoring force. The mass \(m\) produces an inertial force, the internal resistance due to mass and acceleration. The damper, with damping coefficient \(c\), modifies the system's natural oscillation, and the amount of damping relative to the mass and stiffness dictates how the system returns to its equilibrium position.</p>
         </div>
-        <div class="lede">
+        <div class="reveal">
           <div class="card" style="display:flex;justify-content:center">
-            <svg viewBox="0 0 260 320" width="240" role="img" aria-label="Diagram of a mass on a spring with a damper, measured from the equilibrium position">
+            <svg viewBox="0 0 260 320" width="240" role="img" aria-label="Free body diagram of a mass on a spring with a damper, measured from the equilibrium position">
               <rect x="60" y="14" width="140" height="10" fill="#EFE7D6"/>
               <line x1="56" y1="24" x2="204" y2="24" stroke="#C9BBA0" stroke-width="2"/>
               <g stroke="#C9BBA0" stroke-width="1">
@@ -88,30 +89,30 @@
         </div>
       </div>
 
-      <h3 style="margin-top:2.4rem">The assumptions we make</h3>
+      <h3 style="margin-top:2.4rem">Assumptions made in the model</h3>
       <ol class="stack" style="max-width:70ch;padding-left:1.2rem">
         <li>The mass of the spring is negligible compared with the body.</li>
         <li>Motion is strictly vertical, with no horizontal or rotational movement.</li>
-        <li>The values \(m\), \(c\) and \(k\) stay constant and do not change with time.</li>
-        <li>Movement downward is taken as positive, and movement upward as negative.</li>
+        <li>The parameters \(m\), \(c\) and \(k\) are constants and do not change with time.</li>
+        <li>Downward displacement is taken as positive and upward as negative.</li>
       </ol>
 
-      <h3 style="margin-top:2.4rem">Building the equation</h3>
+      <h3 style="margin-top:2.4rem">Deriving the equation of motion</h3>
       <div class="split" style="margin-top:1.2rem">
         <div class="reveal stack">
-          <p>Picture a spring hanging from a fixed support. A body of mass \(m\) is attached to the bottom. Pull the body down a small distance and release it, and it starts to oscillate up and down. We measure the displacement \(y\) as a function of time. The motion follows Newton's second law, which says the acceleration of an object depends on its mass and the total force acting on it.</p>
+          <p>Consider a spring suspended vertically from a fixed support, with a body of mass \(m\) attached to the bottom end. When the body is pulled down a certain distance and released, it oscillates vertically. The displacement \(y\) is a function of time. The motion is governed by Newton's second law, which states that an object's acceleration depends on its mass and the resultant force acting on it.</p>
           <div class="eq">\( \sum F = m\,a = m\,\ddot{y} \)</div>
-          <p>Two more forces act on the body. The damping force opposes the motion, slowly draining energy and bringing the oscillation to a stop.</p>
+          <p>The damping force opposes motion due to energy loss, gradually bringing the oscillation to a stop.</p>
           <div class="eq">\( F_{\text{damping}} = -c\,\dot{y} \)</div>
-          <p>The spring starts unstretched. Once the body is attached, gravity \(mg\) stretches it by an amount \(\delta\) until the spring force balances gravity, and the body sits at rest. This resting point is the equilibrium position, and we measure \(y\) from there.</p>
+          <p>The spring is initially unstretched. When the body is attached, gravity \(mg\) stretches it until the spring force balances the gravitational force, leaving the system at its equilibrium position. Displacement \(y\) is measured from this equilibrium.</p>
           <div class="eq">\( k\,\delta = m g \)</div>
         </div>
         <div class="reveal stack">
-          <p>If the body is pushed down from equilibrium, the spring stretches further and pulls it back. By Hooke's law this restoring force is proportional to how far it has moved.</p>
+          <p>If the body is displaced down from equilibrium, the spring stretches further. By Hooke's law the restoring force is proportional to the displacement, pulling the body back toward \(y = 0\).</p>
           <div class="eq">\( F_{\text{spring}} = -k\,y \)</div>
-          <p>Adding all the forces together with Newton's second law gives the final equation of motion for the damped mass and spring system.</p>
+          <p>Summing all the forces acting on the system through Newton's second law gives the final ordinary differential equation for the damped mass-spring system.</p>
           <div class="eq eq--center" style="border-left-color:var(--terracotta)">\( m\,\ddot{y} + c\,\dot{y} + k\,y = 0 \)</div>
-          <p>where \(m\) is the mass, \(c\) is the damping coefficient and \(k\) is the spring constant. The starting conditions are the initial pull and the initial speed.</p>
+          <p>where \(m\) is the mass, \(c\) is the damping coefficient and \(k\) is the spring constant, with initial conditions</p>
           <div class="eq eq--center">\( y(0) = y_0, \qquad \dot{y}(0) = v_0 \)</div>
         </div>
       </div>
@@ -131,51 +132,33 @@
     <div class="wrap">
       <div class="grid grid-2" style="align-items:stretch">
         <div class="card reveal" style="display:flex;flex-direction:column">
-          <h2 style="margin-bottom:.4rem">The maths behind the motion</h2>
-          <p>Starting from a basic law of physics (force equals mass times acceleration), we build a single equation that captures the whole behaviour: the spring pulling the weight back, the resistance slowing it down, and the weight's own inertia. From there we can predict exactly how the motion plays out.</p>
-          <p class="muted">No heavy background needed. We walk through every step in plain terms, with the diagrams to match.</p>
+          <h2 style="margin-bottom:.4rem">The model</h2>
+          <p>The full derivation from Newton's second law to the governing equation and its characteristic equation, a side-by-side comparison of our derivation with the one in the original paper, and the four damping regimes set by the discriminant.</p>
           <div style="margin-top:auto;padding-top:1rem">
             <a class="btn btn--primary" href="model.html">Explore the model <span class="arr">&rarr;</span></a>
           </div>
         </div>
 
         <div class="card reveal" style="display:flex;flex-direction:column;border-top:3px solid var(--sage)">
-          <h2 style="margin-bottom:.4rem">Watch it move</h2>
-          <p>This is the fun part. Our simulator solves the maths live as you drag the controls, so you can change the weight, the spring, and the amount of resistance and see the motion update instantly. Cross the sweet spot and the bouncing disappears in front of you.</p>
-          <p class="muted">Everything runs right here in your browser. Nothing to install, nothing to wait for.</p>
+          <h2 style="margin-bottom:.4rem">The analysis</h2>
+          <p>The four damping cases solved numerically, our replication of the original paper's figures placed beside theirs, an interactive sensitivity analysis you can drive yourself, and the phase plane.</p>
           <div style="margin-top:auto;padding-top:1rem">
-            <a class="btn btn--sage" href="analysis.html#lab">Open the simulator <span class="arr">&rarr;</span></a>
+            <a class="btn btn--sage" href="analysis.html">See the analysis <span class="arr">&rarr;</span></a>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============ CREATIVE ============ -->
-  <section class="section section--paper">
-    <div class="wrap split">
-      <div class="reveal">
-        <h2>Colour it in</h2>
-        <p>We also turned the whole system into a picture you can colour. Pick a crayon, fill in the spring, the weight and the fading wave, and download your version for the report or the wall. It is a calm, hands on way to get to know the parts.</p>
-        <a class="btn btn--primary" href="creative.html">Open the colouring page <span class="arr">&rarr;</span></a>
-      </div>
-      <div class="reveal">
-        <div class="card center" style="display:grid;place-items:center;min-height:220px;background:repeating-linear-gradient(45deg,var(--paper),var(--paper) 14px,var(--paper-2) 14px,var(--paper-2) 28px)">
-          <p class="mb0" style="font-family:var(--display);font-size:1.4rem;color:var(--ink-2)">Bring the maths to life with colour</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- ============ CONTACT ============ -->
-  <section class="section" id="contact">
+  <section class="section section--paper" id="contact">
     <div class="wrap center" style="max-width:720px;margin-inline:auto">
       <h2>Get in touch</h2>
-      <p class="lede" style="margin-inline:auto">We are the Wronskian Genuises, a student group at Ashesi University. If you have a question about the project, want to reproduce a result, or just want to say hello, we would love to hear from you.</p>
+      <p class="lede" style="margin-inline:auto">We are the Wronskian Geniuses, a student group at Ashesi University. If you have a question about the project, want to reproduce a result, or just want to say hello, we would love to hear from you.</p>
       <div class="tag-row" style="justify-content:center">
         <a class="btn btn--primary" href="mailto:martha.afful@ashesi.edu.gh">Email the team</a>
         <a class="btn btn--ghost" href="team.html">Meet the team</a>
-        <a class="btn btn--ghost" href="resources.html">See our sources</a>
+        <a class="btn btn--ghost" href="resources.html">See our resources</a>
       </div>
     </div>
   </section>

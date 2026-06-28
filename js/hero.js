@@ -79,7 +79,7 @@
     ctx.setLineDash([4, 5]); ctx.strokeStyle = "#C9BBA0"; ctx.lineWidth = 1;
     ctx.beginPath(); ctx.moveTo(8, restY); ctx.lineTo(splitX - 8, restY); ctx.stroke(); ctx.setLineDash([]);
     ctx.fillStyle = "#897F6C"; ctx.font = '10px "IBM Plex Mono", monospace'; ctx.textAlign = "left"; ctx.textBaseline = "bottom";
-    ctx.fillText("rest", 10, restY - 3);
+    ctx.fillText("y = 0", 10, restY - 3);
 
     // the mass
     var mw = 46, mh = 30, mx = cx - mw / 2, my = massY - 6;
@@ -109,7 +109,7 @@
       ctx.fillStyle = reg.color; ctx.beginPath(); ctx.arc(lx, ly, 3.6, 0, 7); ctx.fill();
     }
     ctx.fillStyle = "#897F6C"; ctx.font = '11px "IBM Plex Mono", monospace'; ctx.textAlign = "left"; ctx.textBaseline = "top";
-    ctx.fillText("position over time", px + 6, py + 6);
+    ctx.fillText("displacement  y(t)", px + 6, py + 6);
     ctx.textAlign = "right"; ctx.textBaseline = "bottom";
     ctx.fillText("time \u2192", px + pw - 6, py + ph - 6);
 

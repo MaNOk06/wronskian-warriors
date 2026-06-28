@@ -7,7 +7,7 @@
   if (!canvas) return;
 
   var T = 20, dt = 0.01, view = "time", sweep = false;
-  var chart = new window.Plot.Chart(canvas, { xlabel: "time (seconds)", ylabel: "position", aspect: 0.56, legend: false });
+  var chart = new window.Plot.Chart(canvas, { xlabel: "time  t  (s)", ylabel: "displacement  y(t)", aspect: 0.56, legend: false });
 
   var ids = ["m", "c", "k", "y0", "v0"];
   function get(id) { return parseFloat(document.getElementById("s-" + id).value); }
@@ -34,7 +34,7 @@
     var series = [];
 
     if (view === "time") {
-      chart.xlabel = "time (seconds)"; chart.ylabel = "position"; chart.equalAspect = false;
+      chart.xlabel = "time  t  (s)"; chart.ylabel = "displacement  y(t)"; chart.equalAspect = false;
       if (sweep) [0, 1, 2, 4, 6, 8, 10].forEach(function (cc) {
         var s = window.MSD.integrate(window.MSD.freeMSD(m, cc, k), [y0, v0], 0, T, dt);
         series.push({ color: shade(cc), width: 1.5, pts: s.y.map(function (r, i) { return [s.t[i], r[0]]; }) });
@@ -43,7 +43,7 @@
       var ymax = Math.max(1, Math.abs(y0), Math.abs(v0) / d.w0) * 1.12;
       chart.setData(series, [0, T], [-ymax, ymax]);
     } else {
-      chart.xlabel = "position"; chart.ylabel = "speed"; chart.equalAspect = true;
+      chart.xlabel = "displacement  y"; chart.ylabel = "velocity  y'"; chart.equalAspect = true;
       if (sweep) [0, 2, 4, 6, 8, 10].forEach(function (cc) {
         var s = window.MSD.integrate(window.MSD.freeMSD(m, cc, k), [y0, v0], 0, T, dt);
         series.push({ color: shade(cc), width: 1.4, pts: s.y.map(function (r) { return [r[0], r[1]]; }) });

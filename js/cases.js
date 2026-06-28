@@ -5,10 +5,10 @@
   if (!window.MSD || !window.Plot) return;
   var m = 1, k = 16, T = 20, dt = 0.01;
   var cases = [
-    { c: 0,  label: "No resistance",   color: "#BC5B3C" },
-    { c: 2,  label: "Light",           color: "#C2913B" },
-    { c: 8,  label: "Just enough",     color: "#6E7E5E" },
-    { c: 10, label: "Heavy",           color: "#4F6D7A" }
+    { c: 0,  label: "Undamped (c=0)",        color: "#BC5B3C" },
+    { c: 2,  label: "Underdamped (c=2)",     color: "#C2913B" },
+    { c: 8,  label: "Critically damped (c=8)", color: "#6E7E5E" },
+    { c: 10, label: "Overdamped (c=10)",     color: "#4F6D7A" }
   ];
 
   var solved = cases.map(function (cs) {
@@ -18,7 +18,7 @@
 
   var cmp = document.getElementById("cmp-canvas");
   if (cmp) {
-    var chart = new window.Plot.Chart(cmp, { xlabel: "time (seconds)", ylabel: "position", aspect: 0.5 });
+    var chart = new window.Plot.Chart(cmp, { xlabel: "time  t  (s)", ylabel: "displacement  y(t)", aspect: 0.5 });
     var series = solved.map(function (o) {
       return { label: o.cs.label, color: o.cs.color, width: o.cs.c === 0 ? 1.8 : 2.4,
         pts: o.sol.t.map(function (t, i) { return [t, o.sol.y[i][0]]; }) };
@@ -29,7 +29,7 @@
 
   var ph = document.getElementById("cmp-phase");
   if (ph) {
-    var pchart = new window.Plot.Chart(ph, { xlabel: "position", ylabel: "speed", aspect: 0.62, equalAspect: true });
+    var pchart = new window.Plot.Chart(ph, { xlabel: "displacement  y", ylabel: "velocity  y'", aspect: 0.62, equalAspect: true });
     var pseries = solved.map(function (o) {
       return { label: o.cs.label, color: o.cs.color, width: o.cs.c === 0 ? 1.8 : 2.2,
         pts: o.sol.y.map(function (r) { return [r[0], r[1]]; }) };

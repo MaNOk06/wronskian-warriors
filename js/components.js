@@ -1,8 +1,3 @@
-/* =========================================================================
-   components.js - injects the shared nav + footer, wires interactions,
-   loads MathJax. Each page sets <body data-page="model"> etc. so the
-   matching nav item is highlighted. Kept dependency-free on purpose.
-   ========================================================================= */
 (function () {
   "use strict";
 
@@ -19,25 +14,21 @@
     { id: "home", label: "Home", href: "index.html" },
     { id: "model", label: "Model", href: "model.html", children: [
       { label: "Overview", href: "model.html#overview" },
-      { label: "How we get the equation", href: "model.html#derivation" },
-      { label: "The four behaviours", href: "model.html#regimes" }
+      { label: "Deriving the equation", href: "model.html#derivation" },
+      { label: "Comparison with the paper", href: "model.html#comparison" },
+      { label: "Damping regimes", href: "model.html#regimes" }
     ]},
     { id: "analysis", label: "Analysis", href: "analysis.html", children: [
       { label: "The four cases", href: "analysis.html#cases" },
-      { label: "Try it yourself", href: "analysis.html#lab" },
-      { label: "The motion map", href: "analysis.html#phase" }
+      { label: "Replication of the paper", href: "analysis.html#replication" },
+      { label: "Sensitivity analysis", href: "analysis.html#lab" },
+      { label: "Phase plane", href: "analysis.html#phase" }
     ]},
     { id: "about", label: "About", href: "team.html", children: [
       { label: "The team", href: "team.html#team" },
-      { label: "Creative gallery", href: "creative.html" },
       { label: "Contact", href: "team.html#contact" }
     ]},
-    { id: "resources", label: "Resources", href: "resources.html", children: [
-      { label: "Original paper", href: "resources.html#paper" },
-      { label: "Our report", href: "resources.html#report" },
-      { label: "Project code", href: "resources.html#code" },
-      { label: "Insight Maker", href: "resources.html#insight" }
-    ]}
+    { id: "resources", label: "Resources", href: "resources.html"}
   ];
 
   function el(html) { var t = document.createElement("template"); t.innerHTML = html.trim(); return t.content.firstChild; }
@@ -62,10 +53,8 @@
       '<header class="nav">' +
         '<div class="nav__inner">' +
           '<a class="brand" href="index.html">' + MARK +
-            '<span><span class="brand__name">Wronskian Genuises</span>' +
-            '<span class="brand__sub">Mass · Spring · Damper</span></span></a>' +
+            '<span><span class="brand__name">Wronskian Geniuses</span>' +
           '<nav aria-label="Primary"><ul class="menu">' + items + '</ul></nav>' +
-          '<a class="btn btn--primary nav__cta" href="analysis.html#lab">Open the simulator</a>' +
           '<button class="hamburger" aria-label="Menu" aria-expanded="false"><span></span></button>' +
         '</div>' +
       '</header>'
@@ -112,14 +101,14 @@
         '<div class="foot__top">' +
           '<div class="foot__brand">' +
             '<a class="brand" href="index.html" style="color:#fff">' + MARK +
-              '<span class="brand__name" style="color:#fff">Wronskian Genuises</span></a>' +
-            '<p style="margin-top:.8rem">A MATH251 project exploring how a mass on a spring settles back to rest, derived by hand, solved by computer, and made playable in your browser.</p>' +
+              '<span class="brand__name" style="color:#fff">Wronskian Geniuses</span></a>' +
+            '<p style="margin-top:.8rem">A differential equations project on a mass-spring-damper system</p>' +
           '</div>' +
           '<div><h5>Explore</h5><ul>' +
             '<li><a href="model.html">The model</a></li>' +
             '<li><a href="analysis.html">Analysis</a></li>' +
-            '<li><a href="analysis.html#lab">Try the simulator</a></li>' +
-            '<li><a href="creative.html">Creative gallery</a></li>' +
+            '<li><a href="analysis.html#lab">Sensitivity analysis</a></li>' +
+            '<li><a href="analysis.html#replication">Replication</a></li>' +
           '</ul></div>' +
           '<div><h5>Project</h5><ul>' +
             '<li><a href="team.html">The team</a></li>' +
@@ -133,8 +122,8 @@
           '</ul></div>' +
         '</div>' +
         '<div class="foot__bar">' +
-          '<span>Ashesi University \u00B7 MATH251 \u00B7 2026</span>' +
-          '<span>Built for the love of differential equations.</span>' +
+          '<span> Differential Equations & Numerical Methods \u00B7 Ashesi University</span>' +
+          '<span>June 2026</span>' +
         '</div>' +
       '</footer>'
     );
